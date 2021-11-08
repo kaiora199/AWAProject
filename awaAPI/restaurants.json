@@ -1,5 +1,22 @@
 {
     "restaurants": [
-        
+        {
+            "name": "pizza enrico",
+            "address": "torikatu 10",
+            "operatingHours": "10-02",
+            "image": "image",
+            "restaurantType": "fast food",
+            "priceLevel": "€€€"
+
+        },
+        {
+            "name": "pizza rutles",
+            "address": "torikatu 50",
+            "operatingHours": "10-05",
+            "image": "image",
+            "restaurantType": "fast food",
+            "priceLevel": "€€"
+
+        }
     ]
 }

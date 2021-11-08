@@ -7,6 +7,7 @@ const cors = require('cors')
 const orders = require('./orders.json')
 const users = require('./users.json')
 const restaurants = require('./restaurants.json')
+const food = require('./food.json')
 
 
 //body elements get transferred as json 
@@ -23,12 +24,13 @@ app.listen(port, () => {
 })
 
 app.get('/restaurants', (req, res) => {
-  res.send('all restaurants')
+  res.json(restaurants)
 }) 
 //all restaurant data 
 
 app.get('/restaurants/:id', (req, res)=>{
-  res.send('restaurant with one id attribute')
+  var result = restaurants.restaurants.find(d=>d.id===req.params.id)
+  res.json(result)
 }) 
 // restaurant data 
 
@@ -37,57 +39,97 @@ app.put('/restaurants/:id', (req, res)=>{
 })
 //admin restaurant data add restaurant
 
-app.post('/restaurant', (req, res)=>{
-  res.send('restaurant added')
+app.post('/restaurants', (req, res)=>{
+  console.log("creating a new " + req.body.restaurantType);
+  console.log(req.body);
+  restaurants.restaurants.push({
+      id: uuidv4(),
+      name: req.body.name,
+      address: req.body.address,
+      operatingHours: req.body.operatingHours,
+      image: req.body.image,
+      restaurantType: req.body.restaurantType,
+      priceLevel: req.body.priceLevel
+  })
+  res.send('restaurant created')
 })
 //admin restaurant data 
 
-app.delete('/restaurant/:id', (req, res)=>{
-  res.send('restaurant deleted')
+app.delete('/restaurants/:id', (req, res)=>{
+  const result = restaurants.restaurants.findIndex(d => d.id ===req.params.id)
+  if(result !== -1){
+  restaurants.restaurants.splice(result,1)
+  res.send('deleted '+ req.params.id)
+  }else{
+  res.send('no such restaurant')
+  }
 }) 
 //admin delete restaurant data
 
-app.get('/order', (req, res)=>{
+app.get('/orders', (req, res)=>{
   res.send('get all orders')
 }) 
 //all order data 
 
-app.get('/order/:id', (req, res)=>{
-  res.send('get one order')
+app.get('/orders/:id', (req, res)=>{
+  var result = orders.orders.food.find(d=>d.id===req.params.id)
+  res.json(result)
 }) 
 //one order data 
 
-app.post('/order', (req, res)=>{
+app.post('/orders', (req, res)=>{
   res.send('add a order')
 })
 //add order data 
 
-app.delete('/order/:id', (req, res)=>{
+app.delete('/orders/:id', (req, res)=>{
   res.send('delete an order')
 }) 
 //delete order data
 
-app.get('/user', (req, res)=>{
+app.get('/users', (req, res)=>{
   res.send('get all users data')
 })
 //all user data
 
-app.get('/user/:id', (req, res)=>{
-  res.send('get one users data')
+app.get('/users/:id', (req, res)=>{
+  var result = users.users.find(d=>d.id===req.params.id)
+  res.json(result)
 })
 //one users data
 
-app.post('/user', (req, res)=>{
+app.post('/users', (req, res)=>{
   res.send('one user added')
 }) 
 //add user data 
 
-app.put('/user/:id', (req, res)=>{
+app.put('/users/:id', (req, res)=>{
   res.send('one user modified')
 }) 
 //modify user data
 
-app.delete('/user/:id', (req, res)=>{
+app.delete('/users/:id', (req, res)=>{
   res.send('user deleted by id')
 }) 
 //delete user data
+
+app.get('/food/:id', (req, res)=>{
+  var result = food.food.find(d=>d.id===req.params.id)
+  res.json(result)
+})
+//one food items data
+
+app.post('/food', (req, res)=>{
+  res.send('one user added')
+}) 
+//add a food item  
+
+app.put('/food/:id', (req, res)=>{
+  res.send('one user modified')
+}) 
+//modify food items data
+
+app.delete('/food/:id', (req, res)=>{
+  res.send('user deleted by id')
+}) 
+//delete a food item
