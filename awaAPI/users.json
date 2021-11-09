@@ -1,5 +1,9 @@
 {
     "users": [
-        
+        {
+            "name": "testimies1",
+            "address": "testikatu 123",
+            "password": "testisalis"
+        }
     ]
 }

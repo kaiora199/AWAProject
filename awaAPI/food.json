@@ -1,5 +1,10 @@
 {
     "food": [
-        
+        {
+            "name": "testipitsa",
+            "description": "testin makuinen testipitsa",
+            "price": "testihinta €",
+            "image": "image"
+        }
     ]
 }

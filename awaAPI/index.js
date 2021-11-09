@@ -67,28 +67,42 @@ app.delete('/restaurants/:id', (req, res)=>{
 //admin delete restaurant data
 
 app.get('/orders', (req, res)=>{
-  res.send('get all orders')
+  res.json(orders)
 }) 
 //all order data 
 
 app.get('/orders/:id', (req, res)=>{
-  var result = orders.orders.food.find(d=>d.id===req.params.id)
+  var result = orders.orders.find(d=>d.id===req.params.id)
   res.json(result)
 }) 
 //one order data 
 
 app.post('/orders', (req, res)=>{
-  res.send('add a order')
+  console.log("creating a new " + req.body.order);
+  console.log(req.body);
+  orders.orders.push({
+      id: uuidv4(),
+      orderPrice: req.body.orderPrice,
+      orderTime: req.body.orderTime,
+      orderStatus: req.body.orderStatus
+  })
+  res.send(req.body)
 })
 //add order data 
 
 app.delete('/orders/:id', (req, res)=>{
-  res.send('delete an order')
+  const result = orders.orders.findIndex(d => d.id ===req.params.id)
+  if(result !== -1){
+  orders.orders.splice(result,1)
+  res.send('deleted '+ req.params.id)
+  }else{
+  res.send('no such order')
+  }
 }) 
 //delete order data
 
 app.get('/users', (req, res)=>{
-  res.send('get all users data')
+  res.json(users.users)
 })
 //all user data
 
@@ -99,7 +113,13 @@ app.get('/users/:id', (req, res)=>{
 //one users data
 
 app.post('/users', (req, res)=>{
-  res.send('one user added')
+  console.log(req.body);
+  users.users.push({
+      id: uuidv4(),
+      name: req.body.name,
+      address: req.body.address,
+      password: req.body.password
+  })
 }) 
 //add user data 
 
@@ -109,9 +129,19 @@ app.put('/users/:id', (req, res)=>{
 //modify user data
 
 app.delete('/users/:id', (req, res)=>{
-  res.send('user deleted by id')
+  const result = users.users.findIndex(d => d.id ===req.params.id)
+  if(result !== -1){
+  users.users.splice(result,1)
+  res.send('deleted '+ req.params.id)
+  }else{
+  res.send('no such user')
+  }
 }) 
 //delete user data
+
+app.get('/food', (req, res)=>{
+  res.json(food.food)
+})
 
 app.get('/food/:id', (req, res)=>{
   var result = food.food.find(d=>d.id===req.params.id)
@@ -120,7 +150,14 @@ app.get('/food/:id', (req, res)=>{
 //one food items data
 
 app.post('/food', (req, res)=>{
-  res.send('one user added')
+  console.log(req.body);
+  food.food.push({
+      id: uuidv4(),
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      image: req.body.image
+  })
 }) 
 //add a food item  
 
@@ -130,6 +167,12 @@ app.put('/food/:id', (req, res)=>{
 //modify food items data
 
 app.delete('/food/:id', (req, res)=>{
-  res.send('user deleted by id')
+  const result = food.food.findIndex(d => d.id ===req.params.id)
+  if(result !== -1){
+  food.food.splice(result,1)
+  res.send('deleted '+ req.params.id)
+  }else{
+  res.send('no such food item')
+  }
 }) 
 //delete a food item
