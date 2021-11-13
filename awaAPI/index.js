@@ -35,6 +35,18 @@ app.get('/restaurants/:id', (req, res)=>{
 // restaurant data 
 
 app.put('/restaurants/:id', (req, res)=>{
+  for (let i = 0; i < restaurants.restaurants.length; i++) {
+    if (restaurants.restaurants[i].id === req.params.id) {
+      restaurants.restaurants[i].name = req.body.name,
+      restaurants.restaurants[i].address = req.body.address,
+      restaurants.restaurants[i].operatingHours = req.body.operatingHours,
+      restaurants.restaurants[i].image = req.body.image,
+      restaurants.restaurants[i].restaurantType = req.body.restaurantType,
+      restaurants.restaurants[i].priceLevel = req.body.priceLevel
+      console.log(restaurants.restaurants[i].id)
+    }
+    
+  }
   res.send('restaurant modified')
 })
 //admin restaurant data add restaurant
@@ -120,11 +132,21 @@ app.post('/users', (req, res)=>{
       address: req.body.address,
       password: req.body.password
   })
+  res.send('user created')
 }) 
 //add user data 
 
 app.put('/users/:id', (req, res)=>{
-  res.send('one user modified')
+  for (let i = 0; i < users.users.length; i++) {
+    if (users.users[i].id === req.params.id) {
+      users.users[i].name= req.body.name,
+      users.users[i].address= req.body.address,
+      users.users[i].password= req.body.password
+      console.log(users.users[i].id)
+    }
+    
+  }
+  res.send('user modified')
 }) 
 //modify user data
 
@@ -158,11 +180,22 @@ app.post('/food', (req, res)=>{
       price: req.body.price,
       image: req.body.image
   })
+  res.send('food item created')
 }) 
 //add a food item  
 
 app.put('/food/:id', (req, res)=>{
-  res.send('one user modified')
+  for (let i = 0; i < food.food.length; i++) {
+    if (food.food[i].id === req.params.id) {
+      food.food[i].name= req.body.name,
+      food.food[i].description= req.body.description,
+      food.food[i].price= req.body.price,
+      food.food[i].image = req.body.image
+      console.log(food.food[i].id)
+    }
+    
+  }
+  res.send('food item modified')
 }) 
 //modify food items data
 
