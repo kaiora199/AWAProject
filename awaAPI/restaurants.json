@@ -1,6 +1,7 @@
 {
     "restaurants": [
         {
+            "id": "",
             "name": "pizza enrico",
             "address": "torikatu 10",
             "operatingHours": "10-02",
@@ -10,6 +11,7 @@
 
         },
         {
+            "id": "",
             "name": "pizza rutles",
             "address": "torikatu 50",
             "operatingHours": "10-05",
