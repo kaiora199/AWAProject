@@ -1,7 +1,8 @@
 import './App.css';
 import axios from 'axios';
 import React from 'react';
-import DogPound from './components/dogPound.js'
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import DogPound from './components/dogPound.js';
 
 class App extends React.Component{
   constructor(props){
@@ -39,10 +40,18 @@ class App extends React.Component{
   render()
   {
     return (
-      <div>
-        <DogPound restauData={this.state.restaurants} deleteRestaurant={this.deleteRestaurant}/>
-      </div>
-      
+      <BrowserRouter>
+        <div>
+
+          
+          <DogPound restauData={this.state.restaurants} deleteRestaurant={this.deleteRestaurant}/>
+          <Routes>
+
+            <Route path="/login" element={ <Login /> }></Route>
+          </Routes>
+          
+        </div>
+      </BrowserRouter>
     )
   }
 }
