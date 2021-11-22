@@ -2,6 +2,7 @@ import './App.css';
 import axios from 'axios';
 import React from 'react';
 import RestaurantViewer from './components/restaurantViewer.js'
+import HeaderFront from './components/header.js';
 
 class App extends React.Component{
   constructor(props){
@@ -43,6 +44,7 @@ class App extends React.Component{
   {
     return (
       <div>
+        <HeaderFront/>
         <RestaurantViewer restauData={this.state.restaurants} deleteRestaurant={this.deleteRestaurant}/>
       </div>
       

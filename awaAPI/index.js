@@ -8,6 +8,10 @@ const orders = require('./orders.json')
 const users = require('./users.json')
 const restaurants = require('./restaurants.json')
 const food = require('./food.json')
+const mysql = require('mysql')
+const connection = mysql.createConnection({
+  
+})
 
 
 //body elements get transferred as json 
