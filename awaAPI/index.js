@@ -129,6 +129,7 @@ app.post('/orders', (req, res)=>{
        orders.orders[orders.orders.length-1].customerAddress, 
        orders.orders[orders.orders.length-1].customerDetails]
   ]
+  console.log(values)
     ;
     connection.query(sql, [...values],function (err, result) {
       if (err) throw err;
@@ -167,9 +168,27 @@ app.post('/users', (req, res)=>{
       id: uuidv4(),
       name: req.body.name,
       address: req.body.address,
-      password: req.body.password
+      password: req.body.password,
+      email: req.body.email
   })
-  
+  connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    var sql = "INSERT INTO users (user_email, user_password, user_fullname, orders_id) VALUES(?)";
+    var values = 
+    [
+      [users.users[users.users.length-1].email,
+       users.users[users.users.length-1].password, 
+       users.users[users.users.length-1].name, 
+       orders.orders[orders.orders.length-1].id]
+  ]
+  console.log(values)
+    ;
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+  });
   res.send('user created')
 }) 
 //add user data 
