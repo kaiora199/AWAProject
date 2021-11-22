@@ -2,7 +2,6 @@
     "orders": [
         {
             "orderPrice": "1000€",
-            "orderTime": "kauan",
             "orderStatus": "ei ees alotettu lol",
             "orderQuantity": "monta",
             "orderDate": "tännää",

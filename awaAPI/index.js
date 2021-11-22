@@ -16,7 +16,6 @@ const connection = mysql.createConnection({
   database: 'awa'
 })
 
-connection.connect()
 
 
 
@@ -105,7 +104,6 @@ app.post('/orders', (req, res)=>{
   orders.orders.push({
       id: uuidv4(),
       orderPrice: req.body.orderPrice,
-      orderTime: req.body.orderTime,
       orderStatus: req.body.orderStatus,
       orderQuantity: req.body.orderQuantity,
       orderDate: req.body.orderDate,
@@ -115,6 +113,28 @@ app.post('/orders', (req, res)=>{
       customerEmail: req.body.customerEmail,
       customerAddress: req.body.customerAddress
   })
+  connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    var sql = "INSERT INTO orders(order_number, order_price, order_quanordersrestaurantstity, order_date, order_status, customer_name, customer_email, customer_adress, customer_details) VALUES(?)";
+    var values = 
+    [
+      [orders.orders[orders.orders.length-1].orderNumber,
+       orders.orders[orders.orders.length-1].orderPrice, 
+       orders.orders[orders.orders.length-1].orderQuantity, 
+       orders.orders[orders.orders.length-1].orderDate, 
+       orders.orders[orders.orders.length-1].orderStatus, 
+       orders.orders[orders.orders.length-1].customerName, 
+       orders.orders[orders.orders.length-1].customerEmail, 
+       orders.orders[orders.orders.length-1].customerAddress, 
+       orders.orders[orders.orders.length-1].customerDetails]
+  ]
+    ;
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+  });
   res.send(req.body)
 })
 //add order data 
@@ -149,6 +169,7 @@ app.post('/users', (req, res)=>{
       address: req.body.address,
       password: req.body.password
   })
+  
   res.send('user created')
 }) 
 //add user data 
