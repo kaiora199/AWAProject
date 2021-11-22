@@ -10,8 +10,14 @@ const restaurants = require('./restaurants.json')
 const food = require('./food.json')
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-  
+  host: 'localhost',
+  user: 'root',
+  password: '1234',
+  database: 'awa'
 })
+
+connection.connect()
+
 
 
 //body elements get transferred as json 
@@ -100,7 +106,14 @@ app.post('/orders', (req, res)=>{
       id: uuidv4(),
       orderPrice: req.body.orderPrice,
       orderTime: req.body.orderTime,
-      orderStatus: req.body.orderStatus
+      orderStatus: req.body.orderStatus,
+      orderQuantity: req.body.orderQuantity,
+      orderDate: req.body.orderDate,
+      orderNumber: req.body.orderNumber,
+      customerName: req.body.customerName,
+      customerDetails: req.body.customerDetails,
+      customerEmail: req.body.customerEmail,
+      customerAddress: req.body.customerAddress
   })
   res.send(req.body)
 })
