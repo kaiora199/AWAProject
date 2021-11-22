@@ -29,7 +29,7 @@ id INT NOT NULL AUTO_INCREMENT,
 order_number VARCHAR(45) NOT NULL,
 order_name VARCHAR(45) NOT NULL,
 order_price VARCHAR(45) NOT NULL,
-order_quanordersrestaurantstity VARCHAR(45) NOT NULL,
+order_quantity VARCHAR(45) NOT NULL,
 order_date INT NOT NULL,
 order_status VARCHAR(10) NOT NULL,
 customer_name VARCHAR(45),
@@ -102,8 +102,6 @@ VALUES('10','pizza','10,90','2','11.21.2021','Awaiting Confirmation','Matti Meik
 SELECT * FROM orders;
 
 SELECT title FROM food;
-    
-    
     
     
     
