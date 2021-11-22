@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Doggie(props){
+export default function OneRestaurantContainer(props){
     return(<div>
       <div>
       <ul>

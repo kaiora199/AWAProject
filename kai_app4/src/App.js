@@ -1,7 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import React from 'react';
-import DogPound from './components/dogPound.js'
+import RestaurantViewer from './components/restaurantViewer.js'
 
 class App extends React.Component{
   constructor(props){
@@ -43,7 +43,7 @@ class App extends React.Component{
   {
     return (
       <div>
-        <DogPound restauData={this.state.restaurants} deleteRestaurant={this.deleteRestaurant}/>
+        <RestaurantViewer restauData={this.state.restaurants} deleteRestaurant={this.deleteRestaurant}/>
       </div>
       
     )
