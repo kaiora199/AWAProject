@@ -72,6 +72,26 @@ app.post('/restaurants', (req, res)=>{
       restaurantType: req.body.restaurantType,
       priceLevel: req.body.priceLevel
   })
+  connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    var sql = "INSERT INTO restaurants(name, address, priceLevel, operatingHours, restaurantType, image) VALUES(?)";
+    var values = 
+    [
+      [restaurants.restaurants[restaurants.restaurants.length-1].name,
+       restaurants.restaurants[restaurants.restaurants.length-1].address, 
+       restaurants.restaurants[restaurants.restaurants.length-1].priceLevel, 
+       restaurants.restaurants[restaurants.restaurants.length-1].operatingHours, 
+       restaurants.restaurants[restaurants.restaurants.length-1].restaurantType, 
+       restaurants.restaurants[restaurants.restaurants.length-1].image] 
+  ]
+  console.log(values)
+    ;
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+  });
   res.send('restaurant created')
 })
 //admin restaurant data 
@@ -177,10 +197,12 @@ app.post('/users', (req, res)=>{
     var sql = "INSERT INTO users (user_email, user_password, user_fullname, orders_id) VALUES(?)";
     var values = 
     [
-      [users.users[users.users.length-1].email,
+      [
+       users.users[users.users.length-1].email,
        users.users[users.users.length-1].password, 
-       users.users[users.users.length-1].name, 
-       orders.orders[orders.orders.length-1].id]
+       users.users[users.users.length-1].name,
+       users.users[users.users.length-1].orderID
+      ]
   ]
   console.log(values)
     ;
