@@ -4,7 +4,8 @@
             "title": "testipitsa",
             "description": "testin makuinen testipitsa",
             "price": "testihinta €",
-            "image": "image"
+            "image": "image",
+            "restaurantID": "restaurantID"
         }
     ]
 }

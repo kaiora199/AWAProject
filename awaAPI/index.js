@@ -235,8 +235,27 @@ app.post('/food', (req, res)=>{
       name: req.body.name,
       description: req.body.description,
       price: req.body.price,
-      image: req.body.image
+      image: req.body.image,
+      restaurantID: req.body.restaurantID
   })
+  connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    var sql = "INSERT INTO food (title, price, description, restaurants_id) VALUES(?)";
+    var values = 
+    [
+      [food.food[food.food.length-1].title,
+       food.food[users.users.length-1].price, 
+       users.users[users.users.length-1].description, 
+       orders.orders[orders.orders.length-1].restaurantID]
+  ]
+  console.log(values)
+    ;
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+  });
   res.send('food item created')
 }) 
 //add a food item  
