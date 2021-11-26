@@ -172,7 +172,7 @@ app.delete('/orders/:id', (req, res)=>{
 //delete order data
 
 app.get('/users', (req, res)=>{
-  res.json(users.users)
+  res.json(users)
 })
 //all user data
 
@@ -241,7 +241,7 @@ app.delete('/users/:id', (req, res)=>{
 //delete user data
 
 app.get('/food', (req, res)=>{
-  res.json(food.food)
+  res.json(food)
 })
 
 app.get('/food/:id', (req, res)=>{
