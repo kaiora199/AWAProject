@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
 
 
 
-
+connection.connect();
 //body elements get transferred as json 
 app.use(bodyParser.json());
 //enables data transferring via http elements so that security doesnt get in the way
@@ -33,7 +33,12 @@ app.listen(port, () => {
 })
 
 app.get('/restaurants', (req, res) => {
-  res.json(restaurants)
+  var sql = "SELECT * FROM restaurants;"
+  connection.query(sql, function (err, restaurants, fields){
+    res.json(restaurants)
+  })
+
+
 }) 
 //all restaurant data 
 
@@ -61,37 +66,22 @@ app.put('/restaurants/:id', (req, res)=>{
 //admin restaurant data add restaurant
 
 app.post('/restaurants', (req, res)=>{
-  console.log("creating a new " + req.body.restaurantType);
-  console.log(req.body);
-  restaurants.restaurants.push({
-      id: uuidv4(),
-      name: req.body.name,
-      address: req.body.address,
-      operatingHours: req.body.operatingHours,
-      image: req.body.image,
-      restaurantType: req.body.restaurantType,
-      priceLevel: req.body.priceLevel
-  })
-  connection.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    var sql = "INSERT INTO restaurants(name, address, priceLevel, operatingHours, restaurantType, image) VALUES(?)";
-    var values = 
+  var sql = "INSERT INTO restaurants(name, address, operatingHours, restaurantType, priceLevel) VALUES(?)";
+  var values = 
+  [
     [
-      [restaurants.restaurants[restaurants.restaurants.length-1].name,
-       restaurants.restaurants[restaurants.restaurants.length-1].address, 
-       restaurants.restaurants[restaurants.restaurants.length-1].priceLevel, 
-       restaurants.restaurants[restaurants.restaurants.length-1].operatingHours, 
-       restaurants.restaurants[restaurants.restaurants.length-1].restaurantType, 
-       restaurants.restaurants[restaurants.restaurants.length-1].image] 
-  ]
+    name= req.body.name,
+    address= req.body.address,
+    priceLevel= req.body.priceLevel,
+    operatingHours= req.body.operatingHours,
+    restaurantType= req.body.restaurantType,
+    ]
+]
   console.log(values)
-    ;
     connection.query(sql, [...values],function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
     });
-  });
   res.send('restaurant created')
 })
 //admin restaurant data 
@@ -108,7 +98,12 @@ app.delete('/restaurants/:id', (req, res)=>{
 //admin delete restaurant data
 
 app.get('/orders', (req, res)=>{
-  res.json(orders)
+  var sql = "SELECT * FROM orders;"
+  connection.query(sql, function (err, orders, fields){
+    if (err) throw err;
+    res.json(orders)
+  })
+
 }) 
 //all order data 
 
@@ -121,42 +116,26 @@ app.get('/orders/:id', (req, res)=>{
 app.post('/orders', (req, res)=>{
   console.log("creating a new " + req.body.order);
   console.log(req.body);
-  orders.orders.push({
-      id: uuidv4(),
-      orderPrice: req.body.orderPrice,
-      orderStatus: req.body.orderStatus,
-      orderQuantity: req.body.orderQuantity,
-      orderDate: req.body.orderDate,
-      orderNumber: req.body.orderNumber,
-      customerName: req.body.customerName,
-      customerDetails: req.body.customerDetails,
-      customerEmail: req.body.customerEmail,
-      customerAddress: req.body.customerAddress
-  })
-  connection.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    var sql = "INSERT INTO orders(order_number, order_price, order_quanordersrestaurantstity, order_date, order_status, customer_name, customer_email, customer_adress, customer_details) VALUES(?)";
-    var values = 
+  var sql = "INSERT INTO orders(order_number, order_price, order_quanordersrestaurantstity, order_date, order_status, customer_name, customer_email, customer_adress) VALUES(?)";
+  var values = 
+  [
     [
-      [orders.orders[orders.orders.length-1].orderNumber,
-       orders.orders[orders.orders.length-1].orderPrice, 
-       orders.orders[orders.orders.length-1].orderQuantity, 
-       orders.orders[orders.orders.length-1].orderDate, 
-       orders.orders[orders.orders.length-1].orderStatus, 
-       orders.orders[orders.orders.length-1].customerName, 
-       orders.orders[orders.orders.length-1].customerEmail, 
-       orders.orders[orders.orders.length-1].customerAddress, 
-       orders.orders[orders.orders.length-1].customerDetails]
-  ]
+      orderNumber=req.body.orderNumber,
+      orderPrice=req.body.orderPrice,     
+      orderQuantity=req.body.orderQuantity,      
+      orderDate=req.body.orderDate,
+      orderStatus=req.body.orderStatus,
+      customerName=req.body.customerName,
+      customerEmail=req.body.customerEmail,
+      customerAddress=req.body.customerAddress
+    ]
+]
   console.log(values)
-    ;
     connection.query(sql, [...values],function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
     });
-  });
-  res.send(req.body)
+  res.send('restaurant created')
 })
 //add order data 
 
@@ -172,7 +151,11 @@ app.delete('/orders/:id', (req, res)=>{
 //delete order data
 
 app.get('/users', (req, res)=>{
-  res.json(users)
+  var sql = "SELECT * FROM users;"
+  connection.query(sql, function (err, users, fields){
+    if (err) throw err;
+    res.json(users)
+  })
 })
 //all user data
 
@@ -183,36 +166,24 @@ app.get('/users/:id', (req, res)=>{
 //one users data
 
 app.post('/users', (req, res)=>{
-  console.log(req.body);
-  users.users.push({
-      id: uuidv4(),
-      name: req.body.name,
-      address: req.body.address,
-      password: req.body.password,
-      email: req.body.email
-  })
-  connection.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    var sql = "INSERT INTO users (user_email, user_password, user_fullname, orders_id) VALUES(?)";
-    var values = 
+  var sql = "INSERT INTO users(user_email, user_password, user_fullname, username, orders_id) VALUES(?)";
+  var values = 
+  [
     [
-      [
-       users.users[users.users.length-1].email,
-       users.users[users.users.length-1].password, 
-       users.users[users.users.length-1].name,
-       users.users[users.users.length-1].orderID
-      ]
-  ]
+    user_email= req.body.userEmail,
+    user_password= req.body.userPassword,
+    user_fullname= req.body.userFullname,
+    username= req.body.userName,
+    orders_id= req.body.ordersID,
+    ]
+]
   console.log(values)
-    ;
     connection.query(sql, [...values],function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
     });
-  });
-  res.send('user created')
-}) 
+  res.send('restaurant created')
+})
 //add user data 
 
 app.put('/users/:id', (req, res)=>{
@@ -241,7 +212,11 @@ app.delete('/users/:id', (req, res)=>{
 //delete user data
 
 app.get('/food', (req, res)=>{
-  res.json(food)
+  var sql = "SELECT * FROM food;"
+  connection.query(sql, function (err, food, fields){
+    if (err) throw err;
+    res.json(food)
+  })
 })
 
 app.get('/food/:id', (req, res)=>{
@@ -251,35 +226,22 @@ app.get('/food/:id', (req, res)=>{
 //one food items data
 
 app.post('/food', (req, res)=>{
-  console.log(req.body);
-  food.food.push({
-      id: uuidv4(),
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      image: req.body.image,
-      restaurantID: req.body.restaurantID
-  })
-  connection.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    var sql = "INSERT INTO food (title, price, description, restaurants_id) VALUES(?)";
-    var values = 
+  var sql = "INSERT INTO food(title, price, description, restaurants_id) VALUES(?)"
+  var values = 
+  [
     [
-      [food.food[food.food.length-1].title,
-       food.food[users.users.length-1].price, 
-       users.users[users.users.length-1].description, 
-       orders.orders[orders.orders.length-1].restaurantID]
-  ]
+      title= req.body.title,
+      price= req.body.price,
+      description= req.body.description,
+      restaurantsID= req.body.restaurantsID
+    ]
+]
   console.log(values)
-    ;
     connection.query(sql, [...values],function (err, result) {
-      if (err) throw err;
       console.log("1 record inserted");
     });
-  });
-  res.send('food item created')
-}) 
+  res.send('restaurant created')
+})
 //add a food item  
 
 app.put('/food/:id', (req, res)=>{
