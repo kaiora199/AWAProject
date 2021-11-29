@@ -4,10 +4,6 @@ const bodyParser = require('body-parser')
 const port = 3000
 const { v4: uuidv4 } = require('uuid')
 const cors = require('cors')
-const orders = require('./orders.json')
-const users = require('./users.json')
-const restaurants = require('./restaurants.json')
-const food = require('./food.json')
 const mysql = require('mysql')
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -66,7 +62,8 @@ app.put('/restaurants/:id', (req, res)=>{
 //admin restaurant data add restaurant
 
 app.post('/restaurants', (req, res)=>{
-  var sql = "INSERT INTO restaurants(name, address, operatingHours, restaurantType, priceLevel) VALUES(?)";
+  console.log(req.body)
+  var sql = "INSERT INTO restaurants(name, address, operatingHours, restaurantType, priceLevel) VALUES(?)"
   var values = 
   [
     [
@@ -116,7 +113,7 @@ app.get('/orders/:id', (req, res)=>{
 app.post('/orders', (req, res)=>{
   console.log("creating a new " + req.body.order);
   console.log(req.body);
-  var sql = "INSERT INTO orders(order_number, order_price, order_quanordersrestaurantstity, order_date, order_status, customer_name, customer_email, customer_adress) VALUES(?)";
+  var sql = "INSERT INTO orders(order_number, order_price, order_quanordersrestaurantstity, order_date, order_status, customer_name, customer_details, customer_email, customer_adress) VALUES(?)"
   var values = 
   [
     [
@@ -126,6 +123,7 @@ app.post('/orders', (req, res)=>{
       orderDate=req.body.orderDate,
       orderStatus=req.body.orderStatus,
       customerName=req.body.customerName,
+      customerDetails= req.body.customerDetails,
       customerEmail=req.body.customerEmail,
       customerAddress=req.body.customerAddress
     ]
@@ -166,15 +164,15 @@ app.get('/users/:id', (req, res)=>{
 //one users data
 
 app.post('/users', (req, res)=>{
-  var sql = "INSERT INTO users(user_email, user_password, user_fullname, username, orders_id) VALUES(?)";
+  var sql = "INSERT INTO users(user_email, user_password, user_fullname, username, orders_id) VALUES(?)"
   var values = 
   [
     [
-    user_email= req.body.userEmail,
-    user_password= req.body.userPassword,
-    user_fullname= req.body.userFullname,
-    username= req.body.userName,
-    orders_id= req.body.ordersID,
+    userEmail= req.body.userEmail,
+    userPassword= req.body.userPassword,
+    userFullname= req.body.userFullname,
+    userName= req.body.userName,
+    ordersID= req.body.ordersID
     ]
 ]
   console.log(values)

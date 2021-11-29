@@ -79,28 +79,28 @@ class App extends React.Component{
     axios.get('http://localhost:3000/restaurants')
     .then((response)=>{
       console.log(response);
-      this.setState({restaurants: response.data.restaurants});
+      this.setState({restaurants: response.data});
       console.log(response.data.restaurants);
     })
     .catch((err)=> console.log(err));
     axios.get('http://localhost:3000/orders')
     .then((response)=>{
       console.log(response);
-      this.setState({orders: response.data.orders});
+      this.setState({orders: response.data});
       console.log(response.data.orders);
     })
     .catch((err)=> console.log(err));
     axios.get('http://localhost:3000/food')
     .then((response)=>{
       console.log(response);
-      this.setState({food: response.data.food});
+      this.setState({food: response.data});
       console.log(response.data.food);
     })
     .catch((err)=> console.log(err));
     axios.get('http://localhost:3000/users')
     .then((response)=>{
       console.log(response);
-      this.setState({users: response.data.users});
+      this.setState({users: response.data});
       console.log(response.data.users);
     })
     .catch((err)=> console.log(err));
