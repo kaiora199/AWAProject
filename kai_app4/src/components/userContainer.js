@@ -5,11 +5,11 @@ export default function OneUserContainer(props){
       <div>
       <ul>
         <li>{props.id}</li>
-        <li>{props.name}</li>
-        <li>{props.address}</li>
-        <li>{props.password}</li>
-        <li>{props.email}</li>
-        <li>{props.orderID}</li>
+        <li>{props.orders_id}</li>
+        <li>{props.user_email}</li>
+        <li>{props.user_fullname}</li>
+        <li>{props.user_password}</li>
+        <li>{props.username}</li>
         <button onClick={()=>props.deleteUser(props.id)}>delete</button>
       </ul>
     </div>

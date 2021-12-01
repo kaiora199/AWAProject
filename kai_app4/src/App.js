@@ -64,7 +64,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDUser);
     let deleteIndex = this.state.users.findIndex(users=>users.id === deletingIDUser);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/restaurants/${deletingIDUser}`)
+      axios.delete(`http://localhost:3000/user/${deletingIDUser}`)
       .then(response=>{
       console.log(response)
       let newUsers = [...this.state.users];
@@ -78,36 +78,33 @@ class App extends React.Component{
     console.log('mounted')
     axios.get('http://localhost:3000/restaurants')
     .then((response)=>{
-      console.log(response);
       this.setState({restaurants: response.data});
-      console.log(response.data.restaurants);
+      console.log(response.data);
     })
     .catch((err)=> console.log(err));
     axios.get('http://localhost:3000/orders')
     .then((response)=>{
-      console.log(response);
       this.setState({orders: response.data});
-      console.log(response.data.orders);
+      console.log(response.data);
     })
     .catch((err)=> console.log(err));
     axios.get('http://localhost:3000/food')
     .then((response)=>{
-      console.log(response);
       this.setState({food: response.data});
-      console.log(response.data.food);
+      console.log(response.data);
     })
     .catch((err)=> console.log(err));
     axios.get('http://localhost:3000/users')
     .then((response)=>{
-      console.log(response);
       this.setState({users: response.data});
-      console.log(response.data.users);
+      console.log(response.data);
     })
     .catch((err)=> console.log(err));
   }
 
   render()
   {
+    console.log(this.state.users)
     return (
       <div>
         <HeaderFront/>

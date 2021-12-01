@@ -8,7 +8,7 @@ export default function OneFoodContainer(props){
         <li>{props.title}</li>
         <li>{props.description}</li>
         <li>{props.price}€</li>
-        <li>{props.restaurantID}</li>
+        <li>{props.restaurants_id}</li>
         <button onClick={()=>props.deleteFood(props.id)}>delete</button>
       </ul>
     </div>

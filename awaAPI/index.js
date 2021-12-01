@@ -69,9 +69,9 @@ app.post('/restaurants', (req, res)=>{
     [
     name= req.body.name,
     address= req.body.address,
-    priceLevel= req.body.priceLevel,
     operatingHours= req.body.operatingHours,
     restaurantType= req.body.restaurantType,
+    priceLevel= req.body.priceLevel
     ]
 ]
   console.log(values)
@@ -150,7 +150,7 @@ app.delete('/orders/:id', (req, res)=>{
 
 app.get('/users', (req, res)=>{
   var sql = "SELECT * FROM users;"
-  connection.query(sql, function (err, users, fields){
+  connection.query(sql, function (err, users){
     if (err) throw err;
     res.json(users)
   })
@@ -163,7 +163,7 @@ app.get('/users/:id', (req, res)=>{
 })
 //one users data
 
-app.post('/users', (req, res)=>{
+app.post('/users/:id', (req, res)=>{
   var sql = "INSERT INTO users(user_email, user_password, user_fullname, username, orders_id) VALUES(?)"
   var values = 
   [
@@ -199,13 +199,14 @@ app.put('/users/:id', (req, res)=>{
 //modify user data
 
 app.delete('/users/:id', (req, res)=>{
-  const result = users.users.findIndex(d => d.id ===req.params.id)
-  if(result !== -1){
-  users.users.splice(result,1)
-  res.send('deleted '+ req.params.id)
-  }else{
-  res.send('no such user')
-  }
+  var sql = "DELETE FROM users WHERE id IN (value)"
+  var values = [[
+    id= req.body.id
+  ]]
+  console.log(values)
+  connection.query(sql, [...values],function (err, result) {
+    console.log("1 record delet");
+  });
 }) 
 //delete user data
 
