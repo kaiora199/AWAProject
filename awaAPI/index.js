@@ -53,19 +53,22 @@ app.get('/restaurants/:id', (req, res)=>{
 // restaurant data 
 
 app.put('/restaurants/:id', (req, res)=>{
-  for (let i = 0; i < restaurants.restaurants.length; i++) {
-    if (restaurants.restaurants[i].id === req.params.id) {
-      restaurants.restaurants[i].name = req.body.name,
-      restaurants.restaurants[i].address = req.body.address,
-      restaurants.restaurants[i].operatingHours = req.body.operatingHours,
-      restaurants.restaurants[i].image = req.body.image,
-      restaurants.restaurants[i].restaurantType = req.body.restaurantType,
-      restaurants.restaurants[i].priceLevel = req.body.priceLevel
-      console.log(restaurants.restaurants[i].id)
-    }
-    
-  }
-  res.send('restaurant modified')
+  var sql = "UPDATE restaurants SET name=?, address=?, operatingHours=?, restaurantType=?, priceLevel=? WHERE id=?"
+  var values = 
+  [
+    name= req.body.name,
+    address= req.body.address,
+    operatingHours= req.body.operatingHours,
+    restaurantType= req.body.restaurantType,
+    priceLevel= req.body.priceLevel,
+    id= req.body.id
+  ]
+  console.log(values)
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+      res.send(result)
+    });
 })
 //admin restaurant data add restaurant
 
@@ -187,7 +190,7 @@ app.get('/users/:id', (req, res)=>{
 })
 //one users data
 
-app.post('/users/:id', (req, res)=>{
+app.post('/users', (req, res)=>{
   var sql = "INSERT INTO users(user_email, user_password, user_fullname, username, orders_id) VALUES(?)"
   var values = 
   [
@@ -209,16 +212,22 @@ app.post('/users/:id', (req, res)=>{
 //add user data 
 
 app.put('/users/:id', (req, res)=>{
-  for (let i = 0; i < users.users.length; i++) {
-    if (users.users[i].id === req.params.id) {
-      users.users[i].name= req.body.name,
-      users.users[i].address= req.body.address,
-      users.users[i].password= req.body.password
-      console.log(users.users[i].id)
-    }
-    
-  }
-  res.send('user modified')
+  var sql = "UPDATE users SET user_email=?, user_password=?, user_fullname=?, username=?, orders_id=? WHERE id=?"
+  var values = 
+  [
+    userEmail= req.body.userEmail,
+    userPassword= req.body.userPassword,
+    userFullname= req.body.userFullname,
+    userName= req.body.userName,
+    ordersID= req.body.ordersID,
+    id= req.body.id
+  ]
+  console.log(values)
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+      res.send(result)
+    });
 }) 
 //modify user data
 
@@ -275,17 +284,21 @@ app.post('/food', (req, res)=>{
 //add a food item  
 
 app.put('/food/:id', (req, res)=>{
-  for (let i = 0; i < food.food.length; i++) {
-    if (food.food[i].id === req.params.id) {
-      food.food[i].name= req.body.name,
-      food.food[i].description= req.body.description,
-      food.food[i].price= req.body.price,
-      food.food[i].image = req.body.image
-      console.log(food.food[i].id)
-    }
-    
-  }
-  res.send('food item modified')
+  var sql = "UPDATE food SET title=?, price=?, description=?, restaurants_id=? WHERE id=?"
+  var values = 
+  [
+    title= req.body.title,
+    price= req.body.price,
+    description= req.body.description,
+    restaurantsID= req.body.restaurantsID,
+    id= req.body.id
+  ]
+  console.log(values)
+    connection.query(sql, [...values],function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+      res.send(result)
+    });
 }) 
 //modify food items data
 
