@@ -1,0 +1,15 @@
+.Login{
+    display:flex;
+    position: absolute;
+    left:30%;
+    top:40%;
+    background-color: #dfdbdb;
+}
+.form-inner{
+    margin:8px;
+    text-align: left;
+}
+.form-group input{
+    position: relative;
+    left:20%;
+}

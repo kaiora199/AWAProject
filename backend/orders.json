@@ -1,0 +1,17 @@
+{
+    "orders": [
+        {
+            "id": 0,
+            "orderPrice": "1000€",
+            "orderStatus": "ei ees alotettu lol",
+            "orderQuantity": "monta",
+            "orderDate": "tännää",
+            "orderNumber": "pieni numero",
+            "customerName": "testimies",
+            "customerDetails": "ei oo",
+            "customerEmail": "ei oo ollenkaa lol",
+            "customerAddress": "on"
+
+        }
+    ]
+}
