@@ -32,6 +32,7 @@ app.get('/restaurants', (req, res) => {
   var sql = "SELECT * FROM restaurants;"
   connection.query(sql, function (err, restaurants, fields){
     res.json(restaurants)
+    console.log(restaurants)
   })
 
 
@@ -39,8 +40,15 @@ app.get('/restaurants', (req, res) => {
 //all restaurant data 
 
 app.get('/restaurants/:id', (req, res)=>{
-  var result = restaurants.restaurants.find(d=>d.id===req.params.id)
-  res.json(result)
+  var sql = "SELECT * FROM restaurants WHERE id=?;"
+  var values =[
+    id= req.params.id
+  ]
+  console.log(values)
+  connection.query(sql, values, function (err, result){
+    if (err) throw err;
+    res.json(result)
+  })
 }) 
 // restaurant data 
 
@@ -105,8 +113,15 @@ app.get('/orders', (req, res)=>{
 //all order data 
 
 app.get('/orders/:id', (req, res)=>{
-  var result = orders.orders.find(d=>d.id===req.params.id)
-  res.json(result)
+  var sql = "SELECT * FROM orders WHERE id=?;"
+  var values =[
+    id= req.params.id
+  ]
+  console.log(values)
+  connection.query(sql, values, function (err, result){
+    if (err) throw err;
+    res.json(result)
+  })
 }) 
 //one order data 
 
@@ -158,8 +173,15 @@ app.get('/users', (req, res)=>{
 //all user data
 
 app.get('/users/:id', (req, res)=>{
-  var result = users.users.find(d=>d.id===req.params.id)
-  res.json(result)
+  var sql = "SELECT * FROM users WHERE id=?;"
+  var values =[
+    id= req.params.id
+  ]
+  console.log(values)
+  connection.query(sql, values, function (err, result){
+    if (err) throw err;
+    res.json(result)
+  })
 })
 //one users data
 
@@ -219,8 +241,15 @@ app.get('/food', (req, res)=>{
 })
 
 app.get('/food/:id', (req, res)=>{
-  var result = food.food.find(d=>d.id===req.params.id)
-  res.json(result)
+  var sql = "SELECT * FROM food WHERE id=?;"
+  var values =[
+    id= req.params.id
+  ]
+  console.log(values)
+  connection.query(sql, values, function (err, result){
+    if (err) throw err;
+    res.json(result)
+  })
 })
 //one food items data
 
