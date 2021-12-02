@@ -36,7 +36,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDFood);
     let deleteIndex = this.state.food.findIndex(food=>food.id === deletingIDFood);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/restaurants/${deletingIDFood}`)
+      axios.delete(`http://localhost:3000/food/${deletingIDFood}`)
       .then(response=>{
       console.log(response)
       let newFood = [...this.state.food];
@@ -64,7 +64,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDUser);
     let deleteIndex = this.state.users.findIndex(users=>users.id === deletingIDUser);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/user/${deletingIDUser}`)
+      axios.delete(`http://localhost:3000/users/${deletingIDUser}`)
       .then(response=>{
       console.log(response)
       let newUsers = [...this.state.users];

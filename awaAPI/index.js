@@ -92,13 +92,14 @@ app.post('/restaurants', (req, res)=>{
 //admin restaurant data 
 
 app.delete('/restaurants/:id', (req, res)=>{
-  const result = restaurants.restaurants.findIndex(d => d.id ===req.params.id)
-  if(result !== -1){
-  restaurants.restaurants.splice(result,1)
-  res.send('deleted '+ req.params.id)
-  }else{
-  res.send('no such restaurant')
-  }
+  var sql = "DELETE FROM restaurants WHERE id=?"
+  var values = [[
+    id= req.params.id
+  ]]
+  console.log(values)
+  connection.query(sql, [...values],function (err, result) {
+    console.log("1 record delet");
+  });
 }) 
 //admin delete restaurant data
 
@@ -153,13 +154,14 @@ app.post('/orders', (req, res)=>{
 //add order data 
 
 app.delete('/orders/:id', (req, res)=>{
-  const result = orders.orders.findIndex(d => d.id ===req.params.id)
-  if(result !== -1){
-  orders.orders.splice(result,1)
-  res.send('deleted '+ req.params.id)
-  }else{
-  res.send('no such order')
-  }
+  var sql = "DELETE FROM orders WHERE id=?"
+  var values = [[
+    id= req.params.id
+  ]]
+  console.log(values)
+  connection.query(sql, [...values],function (err, result) {
+    console.log("1 record delet");
+  });
 }) 
 //delete order data
 
@@ -221,9 +223,9 @@ app.put('/users/:id', (req, res)=>{
 //modify user data
 
 app.delete('/users/:id', (req, res)=>{
-  var sql = "DELETE FROM users WHERE id IN (value)"
+  var sql = "DELETE FROM users WHERE id=?"
   var values = [[
-    id= req.body.id
+    id= req.params.id
   ]]
   console.log(values)
   connection.query(sql, [...values],function (err, result) {
@@ -288,12 +290,13 @@ app.put('/food/:id', (req, res)=>{
 //modify food items data
 
 app.delete('/food/:id', (req, res)=>{
-  const result = food.food.findIndex(d => d.id ===req.params.id)
-  if(result !== -1){
-  food.food.splice(result,1)
-  res.send('deleted '+ req.params.id)
-  }else{
-  res.send('no such food item')
-  }
+  var sql = "DELETE FROM food WHERE id=?"
+  var values = [[
+    id= req.params.id
+  ]]
+  console.log(values)
+  connection.query(sql, [...values],function (err, result) {
+    console.log("1 record delet");
+  });
 }) 
 //delete a food item
