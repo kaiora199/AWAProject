@@ -1,10 +1,11 @@
 import React from "react";
+import styles from "./Restaurant.module.css"
 
 export default function OneRestaurantContainer(props){
-    return(<div>
-      <div>
+    return(
+      <div className={styles.restaurantContainerOne}>
       <ul>
-        <li>{props.id}</li>
+        <li className={styles.spaceMaker}>{props.id}</li>
         <li>{props.name}</li>
         <li>{props.address}</li>
         <li>{props.operatingHours}</li>
@@ -13,6 +14,6 @@ export default function OneRestaurantContainer(props){
         <button onClick={()=>props.deleteRestaurant(props.id)}>delete</button>
       </ul>
     </div>
-    </div>
+
     )
 }

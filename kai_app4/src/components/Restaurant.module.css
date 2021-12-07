@@ -1,0 +1,16 @@
+.restaurantContainerMany{
+    margin-top: 1%;
+    display: flex;
+    width: 60px;
+    margin: 10px;
+}
+.restaurantContainerOne{
+    margin: 10px;
+    background: linear-gradient(Grey,lightblue);
+}
+.spaceMaker{
+    padding: 70px;
+    justify-content: center;
+    background-color: antiquewhite;
+    list-style: none;
+}
