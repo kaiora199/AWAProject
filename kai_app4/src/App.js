@@ -6,7 +6,7 @@ import HeaderFront from './components/header.js';
 import FoodViewer from './components/foodViewer.js'
 import UserViewer from './components/userViewer.js'
 import OrderViewer from './components/orderViewer.js'
-import styles from './components/Restaurant.module.css'
+import SearchComponent from './components/searchComponent.js';
 
 class App extends React.Component{
   constructor(props){
@@ -114,10 +114,7 @@ class App extends React.Component{
     return (
       <div>
         <HeaderFront/>
-        <div className={styles.restaurantSearch}>
-          Search for a restaurant
-        <input type="text" onChange={this.onRestaurantSearch} value={this.state.restSearchValue}/>
-        </div>
+        <SearchComponent onRestaurantSearch={this.onRestaurantSearch}/>
         <RestaurantViewer 
                 restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
                 deleteRestaurant={this.deleteRestaurant}

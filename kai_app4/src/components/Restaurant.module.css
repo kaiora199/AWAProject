@@ -22,5 +22,8 @@
     list-style-type: none;
 }
 .restaurantSearch{
-    margin-top: 10px
+    margin: 20px
+}
+.searchInput{
+    margin-left: 10px;
 }

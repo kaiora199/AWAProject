@@ -1,3 +1,25 @@
 .headerContainer{
     display: flex;
+    justify-content: space-evenly;
+    background: linear-gradient(Grey,lightblue);
+    height: 100px;
+}
+.headerContainer button{
+    background: linear-gradient(Grey,lightblue);
+    transition-duration: 0.4s;
+    border:none;
+    width: fit-content;
+}
+.headerContainer button:hover{
+    background: linear-gradient(lightblue,grey);
+    color: black;
+    font-size: large;
+    width: fit-content;
+    height: 90%;
+    box-shadow: 0 10px gray;
+}
+.headerContainer button:active{
+    background: linear-gradient(lightblue,grey);
+    color: black;
+    box-shadow: 0 1px gray;
 }
