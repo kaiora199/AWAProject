@@ -6,11 +6,21 @@
 }
 .restaurantContainerOne{
     margin: 10px;
+    padding: 10px;
     background: linear-gradient(Grey,lightblue);
+    list-style-type: none;
 }
 .spaceMaker{
     padding: 70px;
     justify-content: center;
     background-color: antiquewhite;
-    list-style: none;
+    
+}
+.restaurantList{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+.restaurantSearch{
+    margin-top: 10px
 }

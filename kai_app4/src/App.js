@@ -6,6 +6,7 @@ import HeaderFront from './components/header.js';
 import FoodViewer from './components/foodViewer.js'
 import UserViewer from './components/userViewer.js'
 import OrderViewer from './components/orderViewer.js'
+import styles from './components/Restaurant.module.css'
 
 class App extends React.Component{
   constructor(props){
@@ -14,7 +15,8 @@ class App extends React.Component{
       restaurants: [],
       orders: [],
       food: [],
-      users: []
+      users: [],
+      restSearchValue: ""
     }
   }
 
@@ -102,14 +104,22 @@ class App extends React.Component{
     .catch((err)=> console.log(err));
   }
 
+  onRestaurantSearch = (event) => {
+    console.log(event.target.value)
+    this.setState({restSearchValue: event.target.value})
+  }
+
   render()
   {
-    console.log(this.state.users)
     return (
       <div>
         <HeaderFront/>
+        <div className={styles.restaurantSearch}>
+          Search for a restaurant
+        <input type="text" onChange={this.onRestaurantSearch} value={this.state.restSearchValue}/>
+        </div>
         <RestaurantViewer 
-                restauData={this.state.restaurants} 
+                restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
                 deleteRestaurant={this.deleteRestaurant}
         />
         <FoodViewer

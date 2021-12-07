@@ -4,7 +4,7 @@ import styles from "./Restaurant.module.css"
 export default function OneRestaurantContainer(props){
     return(
       <div className={styles.restaurantContainerOne}>
-      <ul>
+      <ul className={styles.restaurantList}>
         <li className={styles.spaceMaker}>{props.id}</li>
         <li>{props.name}</li>
         <li>{props.address}</li>
