@@ -27,3 +27,20 @@
 .searchInput{
     margin-left: 10px;
 }
+.restaurantCreator{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin-left: 20px;
+    margin-top: 5px;
+    background: linear-gradient(Grey,lightblue);
+    padding: 10px;
+    color: black;
+}
+.restaurantCreator input{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.restaurantCreator button{
+    margin-top: 5px;
+}

@@ -7,6 +7,7 @@ import FoodViewer from './components/foodViewer.js'
 import UserViewer from './components/userViewer.js'
 import OrderViewer from './components/orderViewer.js'
 import SearchComponent from './components/searchComponent.js';
+import AddRestaurantComponent from './components/restaurantCreate.js'
 
 class App extends React.Component{
   constructor(props){
@@ -16,7 +17,13 @@ class App extends React.Component{
       orders: [],
       food: [],
       users: [],
-      restSearchValue: ""
+      restSearchValue: "",
+        newName:"",
+        newAddress:"",
+        newPrice:"",
+        newOperating:"",
+        newType:"",
+        newImg: ""
     }
   }
 
@@ -109,12 +116,63 @@ class App extends React.Component{
     this.setState({restSearchValue: event.target.value})
   }
 
+  newRestaurantHandlerName = (event) => {
+    this.setState({
+      newName: event.target.value
+    })
+  }
+  newRestaurantHandlerAddress = (event) => {
+    this.setState({
+      newAddress: event.target.value
+    })
+  }
+  newRestaurantHandlerPrice = (event) => {
+    this.setState({
+      newPrice: event.target.value
+    })
+  }
+  newRestaurantHandlerHours = (event) => {
+    this.setState({
+      newOperating: event.target.value
+    })
+  }
+  newRestaurantHandlerType = (event) => {
+    this.setState({
+      newType: event.target.value
+    })
+  }
+
+  addNewRestaurant = () =>{
+    axios.post('http://localhost:3000/restaurants',
+    {
+      name: this.state.newName,
+      address: this.state.newAddress,
+      operatingHours: this.state.newOperating,
+      restaurantType: this.state.newType,
+      priceLevel: this.state.newPrice
+    })
+    .then(function(response){
+      console.log(response)
+    })
+    .catch(function(error){
+      console.log(error)
+    })
+  }
+
   render()
   {
     return (
       <div>
         <HeaderFront/>
         <SearchComponent onRestaurantSearch={this.onRestaurantSearch}/>
+        <AddRestaurantComponent 
+        addNewRestaurant={this.addNewRestaurant}
+        newRestaurantHandlerName={this.newRestaurantHandlerName}
+        newRestaurantHandlerAddress={this.newRestaurantHandlerAddress}
+        newRestaurantHandlerPrice={this.newRestaurantHandlerPrice}
+        newRestaurantHandlerHours={this.newRestaurantHandlerHours}
+        newRestaurantHandlerType={this.newRestaurantHandlerType}
+        />
         <RestaurantViewer 
                 restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
                 deleteRestaurant={this.deleteRestaurant}

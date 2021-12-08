@@ -1,0 +1,23 @@
+.foodContainerMany{
+    margin-top: 1%;
+    display: flex;
+    width: 60px;
+    margin: 10px;
+}
+.foodContainerOne{
+    margin: 10px;
+    padding: 10px;
+    background: linear-gradient(Grey,lightblue);
+    list-style-type: none;
+}
+.foodSpaceMaker{
+    padding: 70px;
+    justify-content: center;
+    background-color: antiquewhite;
+    
+}
+.foodList{
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}

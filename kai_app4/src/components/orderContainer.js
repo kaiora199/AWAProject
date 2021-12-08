@@ -1,10 +1,10 @@
 import React from "react";
+import styles from './Order.module.css'
 
 export default function OneOrderContainer(props){
-    return(<div>
-      <div>
-      <ul>
-        <li>{props.id}</li>
+    return(<div className={styles.orderContainerOne}>
+      <ul className={styles.orderList}>
+        <li className={styles.orderSpaceMaker}>{props.id}</li>
         <li>{props.customer_adress}</li>
         <li>{props.customer_details}</li>
         <li>{props.customer_email}</li>
@@ -16,7 +16,6 @@ export default function OneOrderContainer(props){
         <li>{props.order_status}</li>
         <button onClick={()=>props.deleteOrder(props.id)}>delete</button>
       </ul>
-    </div>
     </div>
     )
 }
