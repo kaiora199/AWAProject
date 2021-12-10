@@ -23,3 +23,6 @@
     color: black;
     box-shadow: 0 1px gray;
 }
+.justAContainer{
+    display: flex;
+}

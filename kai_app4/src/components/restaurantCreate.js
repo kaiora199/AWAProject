@@ -4,6 +4,7 @@ import styles from './Restaurant.module.css'
 export default function AddRestaurantComponent(props){
     return(
         <div className={styles.restaurantCreator}>
+            <h4>Create a restaurant</h4>
             Add name
       <input type="text" onChange={props.newRestaurantHandlerName}/>
       Add address

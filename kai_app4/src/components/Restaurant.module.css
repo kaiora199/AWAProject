@@ -32,7 +32,7 @@
     flex-direction: column;
     width: 200px;
     margin-left: 20px;
-    margin-top: 5px;
+    margin-top: 10px;
     background: linear-gradient(Grey,lightblue);
     padding: 10px;
     color: black;
@@ -43,4 +43,7 @@
 }
 .restaurantCreator button{
     margin-top: 5px;
+}
+.restaurantCreator h4{
+    color: rgb(239, 251, 255);
 }

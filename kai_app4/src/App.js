@@ -8,11 +8,15 @@ import UserViewer from './components/userViewer.js'
 import OrderViewer from './components/orderViewer.js'
 import SearchComponent from './components/searchComponent.js';
 import AddRestaurantComponent from './components/restaurantCreate.js'
+import AdminHeaderFront from './components/adminHeader.js'
+import AddFoodComponent from './components/foodCreate.js'
+import styles from './components/Header.module.css'
 
 class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+      managerMode: false,
       restaurants: [],
       orders: [],
       food: [],
@@ -23,7 +27,11 @@ class App extends React.Component{
         newPrice:"",
         newOperating:"",
         newType:"",
-        newImg: ""
+        newImg: "",
+        newTitle: "",
+        newFoodPrice: "",
+        newDesc: "",
+        newResID: ""
     }
   }
 
@@ -115,7 +123,7 @@ class App extends React.Component{
     console.log(event.target.value)
     this.setState({restSearchValue: event.target.value})
   }
-
+  //handlers for adding restaurants
   newRestaurantHandlerName = (event) => {
     this.setState({
       newName: event.target.value
@@ -141,6 +149,27 @@ class App extends React.Component{
       newType: event.target.value
     })
   }
+  //handlers for adding food items
+  newFoodHandlerTitle = (event) => {
+    this.setState({
+      newTitle: event.target.value
+    })
+  }
+  newFoodHandlerPrice = (event) => {
+    this.setState({
+      newFoodPrice: event.target.value
+    })
+  }
+  newFoodHandlerDesc = (event) => {
+    this.setState({
+      newDesc: event.target.value
+    })
+  }
+  newFoodHandlerResID = (event) => {
+    this.setState({
+      newResID: event.target.value
+    })
+  }
 
   addNewRestaurant = () =>{
     axios.post('http://localhost:3000/restaurants',
@@ -159,38 +188,71 @@ class App extends React.Component{
     })
   }
 
+  addNewFood = () =>{
+    axios.post('http://localhost:3000/food',
+    {
+      title: this.state.newTitle,
+      price: this.state.newFoodPrice,
+      description: this.state.newDesc,
+      restaurantsID: this.state.newResID,
+    })
+    .then(function(response){
+      console.log(response)
+    })
+    .catch(function(error){
+      console.log(error)
+    })
+  }
+
   render()
   {
-    return (
-      <div>
-        <HeaderFront/>
-        <SearchComponent onRestaurantSearch={this.onRestaurantSearch}/>
-        <AddRestaurantComponent 
-        addNewRestaurant={this.addNewRestaurant}
-        newRestaurantHandlerName={this.newRestaurantHandlerName}
-        newRestaurantHandlerAddress={this.newRestaurantHandlerAddress}
-        newRestaurantHandlerPrice={this.newRestaurantHandlerPrice}
-        newRestaurantHandlerHours={this.newRestaurantHandlerHours}
-        newRestaurantHandlerType={this.newRestaurantHandlerType}
-        />
-        <RestaurantViewer 
-                restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
-                deleteRestaurant={this.deleteRestaurant}
-        />
-        <FoodViewer
-                fooData={this.state.food} 
-                deleteFood={this.deleteFood}
-        />
-        <UserViewer
-                userData={this.state.users} 
-                deleteUser={this.deleteUser}
-        />
-        <OrderViewer
-                orderData={this.state.orders} 
-                deleteOrder={this.deleteOrder}
-        />
+
+    let output =       
+    <div>
+    <HeaderFront managerChanger={()=>this.setState({managerMode: true})}/>
+    <SearchComponent onRestaurantSearch={this.onRestaurantSearch}/>
+    <RestaurantViewer 
+        restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
+        deleteRestaurant={this.deleteRestaurant}/>
+    <FoodViewer
+        fooData={this.state.food} 
+        deleteFood={this.deleteFood}/>
+  </div>;
+
+    if (this.state.managerMode) {
+      output =
+      <>         
+      <AdminHeaderFront managerChanger={()=>this.setState({managerMode: false})}/>
+      <div className={styles.justAContainer}>
+      <AddRestaurantComponent 
+          addNewRestaurant={this.addNewRestaurant}
+          newRestaurantHandlerName={this.newRestaurantHandlerName}
+          newRestaurantHandlerAddress={this.newRestaurantHandlerAddress}
+          newRestaurantHandlerPrice={this.newRestaurantHandlerPrice}
+          newRestaurantHandlerHours={this.newRestaurantHandlerHours}
+          newRestaurantHandlerType={this.newRestaurantHandlerType}/>
+      <AddFoodComponent          
+          addNewFood={this.addNewFood}
+          newFoodHandlerTitle={this.newFoodHandlerTitle}
+          newFoodHandlerDesc={this.newFoodHandlerDesc}
+          newFoodHandlerPrice={this.newFoodHandlerPrice}
+          newFoodHandlerResID={this.newFoodHandlerResID}/>
       </div>
-      
+      <h1>Orders</h1>
+      <OrderViewer
+          orderData={this.state.orders} 
+          deleteOrder={this.deleteOrder}/>
+      <h1>Users</h1>
+      <UserViewer
+          userData={this.state.users} 
+          deleteUser={this.deleteUser}/>
+      </>;
+    }
+
+    return (
+      <>
+      {output}
+      </>
     )
   }
 }
