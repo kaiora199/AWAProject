@@ -21,3 +21,9 @@
     padding: 0px;
     list-style-type: none;
 }
+.foodListAdmin{
+    margin: 5px;
+    padding: 3px;
+    list-style-type: none;
+    border: 1px solid black;
+}

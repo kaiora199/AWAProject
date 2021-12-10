@@ -18,6 +18,19 @@ export default function AddRestaurantComponent(props){
       Add an image
       <input type="file"/>
       <button onClick={props.addNewRestaurant}>Add restaurant</button>
+      <h3>Your restaurants</h3>
+      {props.restauData.map(rest => 
+      <div>
+        <ul className={styles.restaurantListAdmin}>
+        <li className={styles.spaceMaker}>{rest.id}</li>
+        <li>{rest.name}</li>
+        <li>{rest.address}</li>
+        <li>{rest.operatingHours}€</li>
+        <li>{rest.restaurantType}</li>
+        <li>{rest.priceLevel}</li>
+        <button onClick={()=>props.deleteRestaurant(rest.id)}>delete</button>
+      </ul>
+      </div>)}
 
       </div>
     )

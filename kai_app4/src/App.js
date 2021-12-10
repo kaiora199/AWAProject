@@ -213,10 +213,9 @@ class App extends React.Component{
     <SearchComponent onRestaurantSearch={this.onRestaurantSearch}/>
     <RestaurantViewer 
         restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
-        deleteRestaurant={this.deleteRestaurant}/>
+        />
     <FoodViewer
-        fooData={this.state.food} 
-        deleteFood={this.deleteFood}/>
+        fooData={this.state.food}/>
   </div>;
 
     if (this.state.managerMode) {
@@ -224,14 +223,18 @@ class App extends React.Component{
       <>         
       <AdminHeaderFront managerChanger={()=>this.setState({managerMode: false})}/>
       <div className={styles.justAContainer}>
-      <AddRestaurantComponent 
+      <AddRestaurantComponent
+          restauData={this.state.restaurants}
+          deleteRestaurant={this.deleteRestaurant} 
           addNewRestaurant={this.addNewRestaurant}
           newRestaurantHandlerName={this.newRestaurantHandlerName}
           newRestaurantHandlerAddress={this.newRestaurantHandlerAddress}
           newRestaurantHandlerPrice={this.newRestaurantHandlerPrice}
           newRestaurantHandlerHours={this.newRestaurantHandlerHours}
           newRestaurantHandlerType={this.newRestaurantHandlerType}/>
-      <AddFoodComponent          
+      <AddFoodComponent
+          fooData={this.state.food}
+          deleteFood={this.deleteFood}          
           addNewFood={this.addNewFood}
           newFoodHandlerTitle={this.newFoodHandlerTitle}
           newFoodHandlerDesc={this.newFoodHandlerDesc}
