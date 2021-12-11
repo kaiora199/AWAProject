@@ -1,24 +1,73 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const port = 3000
+const port = 5000
 const { v4: uuidv4 } = require('uuid')
 const cors = require('cors')
 const mysql = require('mysql')
+const mysqlPort = 3306;
 const connection = mysql.createConnection({
   host: 'localhost',
+  mysqlPort,
   user: 'root',
   password: '1234',
   database: 'awa'
 })
 
+var jwt = require('jsonwebtoken');
 
+const hasha = require('hasha');
+var BasicStrategy = require('passport-http').BasicStrategy;
+const passport = require('passport')
+
+app.use(passport.initialize());
 
 connection.connect();
 //body elements get transferred as json 
 app.use(bodyParser.json());
 //enables data transferring via http elements so that security doesnt get in the way
 app.use(cors());
+
+//HTTP Basic authentication
+passport.use(new BasicStrategy(function(email, password, done){
+  //Find username from database
+  hashpass = hasha(password, {algorithm: "sha256"});
+  var sql = `SELECT * FROM users WHERE (user_email="${email}" AND user_password="${hashpass}");`
+  connection.query(sql, function(err, rows, fields){
+    if (err) throw err;
+    console.log(rows)
+    //if we found a match
+    if(rows[0] != null)
+    {
+      console.log(rows)
+      const payload = 
+        {
+          data: 
+          {
+            email:  rows[0].user_email,
+            name: rows[0].user_fullname
+          }
+        }
+      const secretkey = 'mySecretSigningKey';
+      const options = {expiresIn: '5h'};
+      var generatedtoken = jwt.sign(payload, secretkey, options);
+      var jsontoken = {token: generatedtoken}
+      return done(null, jsontoken);
+    }
+    else
+    {
+      console.log("auth faild");
+      return done(null, false, {message: "auth failed"});
+      
+    }
+  });
+  
+}));
+
+//http basic first time login
+app.post('/login', passport.authenticate('basic', {session: false}), (req, res) => {
+  res.json(req.user.token);
+})
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

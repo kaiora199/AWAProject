@@ -11,6 +11,8 @@ import AddRestaurantComponent from './components/restaurantCreate.js'
 import AdminHeaderFront from './components/adminHeader.js'
 import AddFoodComponent from './components/foodCreate.js'
 import styles from './components/Header.module.css'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import LoginScreen from './components/LoginScreen/LoginScreen';
 
 class App extends React.Component{
   constructor(props){
@@ -31,7 +33,10 @@ class App extends React.Component{
         newTitle: "",
         newFoodPrice: "",
         newDesc: "",
-        newResID: ""
+        newResID: "",
+      appUser: {token: "",
+      name: ""
+      }
     }
   }
 
@@ -39,7 +44,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDRestaurant);
     let deleteIndex = this.state.restaurants.findIndex(restaurants=>restaurants.id === deletingIDRestaurant);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/restaurants/${deletingIDRestaurant}`)
+      axios.delete(`http://localhost:5000/restaurants/${deletingIDRestaurant}`)
       .then(response=>{
       console.log(response)
       let newRestaurants = [...this.state.restaurants];
@@ -53,7 +58,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDFood);
     let deleteIndex = this.state.food.findIndex(food=>food.id === deletingIDFood);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/food/${deletingIDFood}`)
+      axios.delete(`http://localhost:5000/food/${deletingIDFood}`)
       .then(response=>{
       console.log(response)
       let newFood = [...this.state.food];
@@ -67,7 +72,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDOrder);
     let deleteIndex = this.state.orders.findIndex(orders=>orders.id === deletingIDOrder);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/orders/${deletingIDOrder}`)
+      axios.delete(`http://localhost:5000/orders/${deletingIDOrder}`)
       .then(response=>{
       console.log(response)
       let newOrders = [...this.state.orders];
@@ -81,7 +86,7 @@ class App extends React.Component{
     console.log('delet' + deletingIDUser);
     let deleteIndex = this.state.users.findIndex(users=>users.id === deletingIDUser);
     if(deleteIndex !== -1){
-      axios.delete(`http://localhost:3000/users/${deletingIDUser}`)
+      axios.delete(`http://localhost:5000/users/${deletingIDUser}`)
       .then(response=>{
       console.log(response)
       let newUsers = [...this.state.users];
@@ -93,25 +98,25 @@ class App extends React.Component{
 
   componentDidMount(){
     console.log('mounted')
-    axios.get('http://localhost:3000/restaurants')
+    axios.get('http://localhost:5000/restaurants')
     .then((response)=>{
       this.setState({restaurants: response.data});
       console.log(response.data);
     })
     .catch((err)=> console.log(err));
-    axios.get('http://localhost:3000/orders')
+    axios.get('http://localhost:5000/orders')
     .then((response)=>{
       this.setState({orders: response.data});
       console.log(response.data);
     })
     .catch((err)=> console.log(err));
-    axios.get('http://localhost:3000/food')
+    axios.get('http://localhost:5000/food')
     .then((response)=>{
       this.setState({food: response.data});
       console.log(response.data);
     })
     .catch((err)=> console.log(err));
-    axios.get('http://localhost:3000/users')
+    axios.get('http://localhost:5000/users')
     .then((response)=>{
       this.setState({users: response.data});
       console.log(response.data);
@@ -172,7 +177,7 @@ class App extends React.Component{
   }
 
   addNewRestaurant = () =>{
-    axios.post('http://localhost:3000/restaurants',
+    axios.post('http://localhost:5000/restaurants',
     {
       name: this.state.newName,
       address: this.state.newAddress,
@@ -189,7 +194,7 @@ class App extends React.Component{
   }
 
   addNewFood = () =>{
-    axios.post('http://localhost:3000/food',
+    axios.post('http://localhost:5000/food',
     {
       title: this.state.newTitle,
       price: this.state.newFoodPrice,
@@ -206,18 +211,37 @@ class App extends React.Component{
 
   render()
   {
-
-    let output =       
+    let restaurantFoodViewer = 
     <div>
-    <HeaderFront managerChanger={()=>this.setState({managerMode: true})}/>
+    <HeaderFront managerChanger={()=>this.setState({managerMode: true})} user={this.state.appUser}/>
     <SearchComponent onRestaurantSearch={this.onRestaurantSearch}/>
-    <RestaurantViewer 
-        restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
-        deleteRestaurant={this.deleteRestaurant}/>
-    <FoodViewer
-        fooData={this.state.food} 
-        deleteFood={this.deleteFood}/>
-  </div>;
+        <RestaurantViewer 
+            restauData={this.state.restaurants.filter((item)=>item.name.includes(this.state.restSearchValue))} 
+            deleteRestaurant={this.deleteRestaurant}/>
+        <FoodViewer
+            fooData={this.state.food} 
+            deleteFood={this.deleteFood}/>
+    </div>
+    ;
+    let output =this.state.appUser.token !== "" ?
+    (
+    <BrowserRouter>
+        <Routes>
+          <Route path = "/login" element = {<LoginScreen appUser={this.state.appUser} />}></Route>
+          <Route path = "/" element = {<Navigate to="/login" />}></Route>
+        </Routes>
+    </BrowserRouter>   
+    ) : 
+     (
+      <BrowserRouter>
+        <Routes>
+          <Route path = "/login" element = {<LoginScreen appUser={this.state.appUser} />}></Route>
+          <Route path = "/" element = {restaurantFoodViewer}></Route>
+        </Routes>
+      </BrowserRouter>
+     )
+    
+    
 
     if (this.state.managerMode) {
       output =
