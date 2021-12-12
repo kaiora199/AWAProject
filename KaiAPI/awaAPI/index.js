@@ -6,9 +6,9 @@ const { v4: uuidv4 } = require('uuid')
 const cors = require('cors')
 const mysql = require('mysql')
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
+  host: 'database-1.c6na2lf1ro94.eu-west-3.rds.amazonaws.com',
+  user: 'admin',
+  password: '12345678',
   database: 'awa'
 })
 
